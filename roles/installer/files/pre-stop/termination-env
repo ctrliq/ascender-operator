@@ -24,42 +24,55 @@ stderr="${PRE_STOP_STDERR:-/proc/1/fd/2}"
 handler="${PRE_STOP_HANDLER:-bash -c \"PYTHONUNBUFFERED=x awx-manage disable_instance --wait --retry=inf\"}"
 
 log_prefix="${PRE_STOP_LOG_PREFIX:-preStop.exec}"
-[[ -n ${PRE_STOP_LOG_ROLE} ]] && log_prefix="${log_prefix}] [$PRE_STOP_LOG_ROLE"
+if [ -n "${PRE_STOP_LOG_ROLE:-}" ]; then
+  log_prefix="${log_prefix}] [$PRE_STOP_LOG_ROLE"
+fi
 
 # interval at which `watcher`s check for `marker_file` presence
 recheck_sleep="${PRE_STOP_RECHECK_SLEEP:-1}"
 # interval at which `watcher`s report into $stdout that they are still watching
 report_every="${PRE_STOP_REPORT_EVERY:-30}"
 
-function log {
-  printf "[%s] $1\n" "$log_prefix" "${@:2}"
+log() {
+  format="$1"
+  shift
+  printf "[%s] ${format}\n" "$log_prefix" "$@"
 }
 
-function parameters_string {
+parameters_string() {
   for param in "$@"; do
-    printf "%s=\"%s\"\n" "$param" "${!param}"
-  done | paste -s -d ' '
+    case "$param" in
+      marker_file)    value=$marker_file ;;
+      heartbeat_file) value=$heartbeat_file ;;
+      bailout_file)   value=$bailout_file ;;
+      recheck_sleep)  value=$recheck_sleep ;;
+      report_every)   value=$report_every ;;
+      handler)        value=$handler ;;
+      *)              value="" ;;
+    esac
+
+    printf '%s="%s" ' "$param" "$value"
+  done
 }
 
-function check_bailout {
-  if [[ -f $bailout_file ]]; then
+check_bailout() {
+  if [ -f "$bailout_file" ]; then
     log "\"%s\" file has been detected, accepting bail out signal and failing the hook script" \
       "$bailout_file"
     exit 1
   fi
 }
 
-function check_heartbeat {
-  if [[ -f $heartbeat_file ]]; then
+check_heartbeat() {
+  if [ -f "$heartbeat_file" ]; then
     delta=$(( $(date +%s) - $(stat -c %Y "$heartbeat_file") ))
   else
     delta=$(( $(date +%s) - $1 ))
   fi
 
-  if [[ $delta -gt $heartbeat_threshold ]]; then
+  if [ "$delta" -gt "$heartbeat_threshold" ]; then
     log "The heartbeat file hasn't been updated since %ss, which is above the threshold of %ds, assuming the master is not operating and failing the hook script" \
-      $delta
-      $heartbeat_threshold
+      "$delta" "$heartbeat_threshold"
     touch "$bailout_file"
     exit 1
   fi

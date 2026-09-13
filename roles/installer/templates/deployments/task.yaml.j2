@@ -253,11 +253,11 @@ spec:
                 command:
                 - sh
                 - -c
-                # redis image doesn't support writing to `/proc/1/fd/*`
+                # Additional sleep to let awx-task container terminate first
+                # and avoid awx-task->valkey connection loss stack trace
                 - >
-                  PRE_STOP_STDOUT=/dev/stdout
-                  PRE_STOP_STDERR=/dev/stderr
                   /var/lib/pre-stop/scripts/termination-waiter
+                  && sleep 2
 {% endif %}
           resources: {{ redis_resource_requirements }}
         - image: '{{ _image }}'
