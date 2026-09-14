@@ -69,6 +69,14 @@ CHART_BRANCH ?= gh-pages
 CHART_DIR ?= gh-pages
 CHART_INDEX ?= index.yaml
 
+# Renders the ascender.ansible.com CRDs from the awx.ansible.com ones. They
+# describe the same four resources and a CRD belongs to one group, so one side
+# is generated rather than kept in step by hand. CI runs this and fails if the
+# result differs from what is committed.
+.PHONY: crds
+crds:
+	python3 hack/render-ascender-crds.py
+
 .PHONY: all
 all: docker-build
 

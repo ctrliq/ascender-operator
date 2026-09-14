@@ -33,4 +33,65 @@
     role: mesh_ingress
     vars:
       finalizer_run: true
+
+# The same four resources under the Ascender group, reconciled by the same
+# playbook and roles. Only the names the group rename moves are overridden:
+# deployment_type stays awx, because it names the database, the database user
+# and the label every managed object carries, none of which can move without a
+# migration and a selector that finds nothing.
+- version: v1beta1
+  group: ascender.ansible.com
+  kind: Ascender
+  playbook: playbooks/awx.yml
+  snakeCaseParameters: False
+  vars:
+    api_group: ascender.ansible.com
+    kind: Ascender
+    restore_kind: AscenderRestore
+
+- version: v1beta1
+  group: ascender.ansible.com
+  kind: AscenderBackup
+  role: backup
+  snakeCaseParameters: False
+  vars:
+    api_group: ascender.ansible.com
+    kind: AscenderBackup
+    deployment_kind: Ascender
+  finalizer:
+    name: ascender.ansible.com/finalizer
+    role: backup
+    vars:
+      finalizer_run: true
+      api_group: ascender.ansible.com
+      kind: AscenderBackup
+      deployment_kind: Ascender
+
+- version: v1beta1
+  group: ascender.ansible.com
+  kind: AscenderRestore
+  role: restore
+  snakeCaseParameters: False
+  vars:
+    api_group: ascender.ansible.com
+    kind: AscenderRestore
+    deployment_kind: Ascender
+    backup_kind: AscenderBackup
+
+- version: v1alpha1
+  group: ascender.ansible.com
+  kind: AscenderMeshIngress
+  role: mesh_ingress
+  snakeCaseParameters: False
+  vars:
+    api_group: ascender.ansible.com
+    deployment_kind: Ascender
+  finalizer:
+    name: ascender.ansible.com/ascender-mesh-ingress-finalizer
+    role: mesh_ingress
+    vars:
+      finalizer_run: true
+      api_group: ascender.ansible.com
+      deployment_kind: Ascender
+
 # +kubebuilder:scaffold:watch

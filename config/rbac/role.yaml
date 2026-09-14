@@ -130,10 +130,13 @@ rules:
       - create
   - apiGroups:
       - awx.ansible.com
+      - ascender.ansible.com
     resources:
       - '*'
       - awxbackups
       - awxrestores
+      - ascenderbackups
+      - ascenderrestores
     verbs:
       - '*'
   - apiGroups:

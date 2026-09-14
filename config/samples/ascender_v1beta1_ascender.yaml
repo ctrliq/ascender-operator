@@ -1,0 +1,18 @@
+---
+apiVersion: ascender.ansible.com/v1beta1
+kind: Ascender
+metadata:
+  name: example-ascender
+spec:
+  web_resource_requirements:
+    requests:
+      cpu: 50m
+      memory: 128M
+  task_resource_requirements:
+    requests:
+      cpu: 50m
+      memory: 128M
+  ee_resource_requirements:
+    requests:
+      cpu: 50m
+      memory: 64M

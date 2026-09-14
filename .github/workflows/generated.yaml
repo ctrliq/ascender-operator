@@ -1,0 +1,32 @@
+---
+
+# The ascender.ansible.com CRDs and sample CRs are rendered from the
+# awx.ansible.com ones by `make crds`, because a CRD belongs to one group and
+# both groups have to be served while deployments move between them. Two copies
+# of three thousand lines of schema, kept in step by hand, drift: the symptom is
+# a field that validates under one kind and not the other, which nothing reports.
+#
+# This is what makes the generated side a promise rather than an intention.
+
+name: Generated files
+
+on:
+  pull_request:
+  push:
+    branches: [devel]
+
+jobs:
+  crds:
+    name: CRDs are in step with their source
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Render them again
+        run: make crds
+
+      - name: Fail if the result differs from what is committed
+        run: git diff --exit-code config/crd/bases config/samples

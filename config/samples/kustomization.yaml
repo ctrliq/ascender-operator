@@ -4,4 +4,9 @@ resources:
 - awx_v1beta1_awxbackup.yaml
 - awx_v1beta1_awxrestore.yaml
 - awx_v1alpha1_awxmeshingress.yaml
+# Generated from the four above by `make crds`.
+- ascender_v1beta1_ascender.yaml
+- ascender_v1beta1_ascenderbackup.yaml
+- ascender_v1beta1_ascenderrestore.yaml
+- ascender_v1alpha1_ascendermeshingress.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples

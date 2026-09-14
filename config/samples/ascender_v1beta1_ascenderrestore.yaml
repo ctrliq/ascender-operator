@@ -1,0 +1,14 @@
+apiVersion: ascender.ansible.com/v1beta1
+kind: AscenderRestore
+metadata:
+  name: ascenderrestore-sample
+spec:
+  deployment_name: example-ascender-2
+  backup_name: example-ascender-backup
+  restore_resource_requirements:
+    limits:
+      cpu: "1000m"
+      memory: "4096Mi"
+    requests:
+      cpu: "25m"
+      memory: "32Mi"

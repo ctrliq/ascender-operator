@@ -1,0 +1,8 @@
+# Placeholder to pass CI and allow bundle generation
+---
+apiVersion: ascender.ansible.com/v1alpha1
+kind: AscenderMeshIngress
+metadata:
+  name: example-ascender-mesh-ingress
+spec:
+  deployment_name: example-ascender

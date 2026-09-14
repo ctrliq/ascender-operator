@@ -6,4 +6,11 @@ resources:
 - bases/awx.ansible.com_awxbackups.yaml
 - bases/awx.ansible.com_awxrestores.yaml
 - bases/awx.ansible.com_awxmeshingresses.yaml
+# Generated from the four above by `make crds`. Both groups are served while
+# deployments move between them: a conversion webhook converts between versions
+# and never across groups, so there is nothing to bridge them with.
+- bases/ascender.ansible.com_ascenders.yaml
+- bases/ascender.ansible.com_ascenderbackups.yaml
+- bases/ascender.ansible.com_ascenderrestores.yaml
+- bases/ascender.ansible.com_ascendermeshingresses.yaml
 #+kubebuilder:scaffold:crdkustomizeresource
