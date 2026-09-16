@@ -70,6 +70,12 @@ KC="kubectl -n $NAMESPACE"
 # name is a different operation and this script does not attempt it.
 SRC_KIND=AWX
 DST_KIND=Ascender
+# resource.group, kubectl's fully qualified form. It reads as a stutter only
+# because each group is named after its product: the resource awx in the group
+# awx.ansible.com, the resource ascender in ascender.ansible.com. Worth spelling
+# out rather than passing a bare "awx", because two groups now carry resources
+# of almost the same name and a short name resolves to whichever the cluster
+# decides it meant.
 SRC_RES=awx.awx.ansible.com
 DST_RES=ascender.ascender.ansible.com
 DST_API=ascender.ansible.com/v1beta1
