@@ -2315,7 +2315,7 @@
 <a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>customresourcedefinition.apiextensions.k8s.io/awxbackups.awx.ansible.com created
 <a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>customresourcedefinition.apiextensions.k8s.io/awxrestores.awx.ansible.com created
 <a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>customresourcedefinition.apiextensions.k8s.io/awxs.awx.ansible.com created
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>serviceaccount/awx-operator-controller-manager created
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>serviceaccount/ascender-operator-controller-manager created
 <a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>role.rbac.authorization.k8s.io/awx-operator-awx-manager-role created
 <a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>role.rbac.authorization.k8s.io/awx-operator-leader-election-role created
 <a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>clusterrole.rbac.authorization.k8s.io/awx-operator-metrics-reader created
@@ -2324,13 +2324,13 @@
 <a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>rolebinding.rbac.authorization.k8s.io/awx-operator-leader-election-rolebinding created
 <a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>clusterrolebinding.rbac.authorization.k8s.io/awx-operator-proxy-rolebinding created
 <a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>configmap/awx-operator-awx-manager-config created
-<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>service/awx-operator-controller-manager-metrics-service created
-<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>deployment.apps/awx-operator-controller-manager created
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>service/ascender-operator-controller-manager-metrics-service created
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>deployment.apps/ascender-operator-controller-manager created
 </code></pre></div>
 <p>Wait a bit and you should have the <code>awx-operator</code> running:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$ kubectl get pods -n awx
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>NAME                                               READY   STATUS    RESTARTS   AGE
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>awx-operator-controller-manager-66ccd8f997-rhd4z   2/2     Running   0          11s
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>ascender-operator-controller-manager-66ccd8f997-rhd4z   2/2     Running   0          11s
 </code></pre></div>
 <p>So we don't have to keep repeating <code>-n awx</code>, let's set the current namespace for <code>kubectl</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$ kubectl config set-context --current --namespace=awx
@@ -2370,7 +2370,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>kubectl apply -k .
 </code></pre></div>
 <p>After a few minutes, the new Ascender instance will be deployed. You can look at the operator pod logs in order to know where the installation process is at:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>$ kubectl logs -f deployments/awx-operator-controller-manager -c awx-manager
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>$ kubectl logs -f deployments/ascender-operator-controller-manager -c ascender-manager
 </code></pre></div>
 <p>After a few seconds, you should see the operator begin to create new resources:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>$ kubectl get pods -l "app.kubernetes.io/managed-by=awx-operator"
