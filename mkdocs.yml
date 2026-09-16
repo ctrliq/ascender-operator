@@ -52,6 +52,7 @@ nav:
       - installation/helm-install-on-existing-cluster.md
   - Migrate:
       - migration/migration.md
+      - migration/awx-to-ascender.md
   - Uninstall:
       - uninstall/uninstall.md
   - User Guide:
