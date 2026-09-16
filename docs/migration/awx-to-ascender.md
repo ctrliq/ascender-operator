@@ -7,28 +7,27 @@ The operator serves two API groups for the same four resources: `awx.ansible.com
 Nothing has to move. An existing `AWX` keeps reconciling exactly as before, through the
 same playbook and the same roles.
 
-## Why this is not an alias
+## What differs between the two
 
 A CRD belongs to exactly one API group, and a conversion webhook converts between
 versions within a group, never across groups. `AWX` and `Ascender` are therefore two
 different objects with separate storage, and `kubectl get ascender` will not show an
 existing AWX.
 
-What makes a move possible instead is that every managed object is named from the custom
-resource's own name and from `deployment_type`, which stays `awx` for both kinds. An
-`Ascender` named `prod` wants exactly the objects an `AWX` named `prod` already has: the
-same `prod-awx-configmap`, the same `prod-postgres-15` StatefulSet, the same database and
-the same secrets.
+They also no longer name things the same way. `deployment_type` follows the kind, so a
+deployment created as an `Ascender` calls its database `ascender`, gives its objects
+`app.kubernetes.io/managed-by: ascender-operator`, and mounts an
+`<name>-ascender-configmap`. A deployment created as an `AWX` says `awx` in all three.
 
-That has a consequence worth stating plainly: an `AWX` and an `Ascender` of the same name
-in one namespace would manage the same objects. The operator refuses to reconcile when it
-finds the other kind under that name, rather than letting the two fight.
+That is what makes moving one across more than a relabelling. `deployment_type` appears
+in `spec.selector.matchLabels` on the two Deployments and the postgres StatefulSet, and
+Kubernetes does not allow a selector to change after creation, so those three have to be
+recreated. The database has to be renamed too, and nothing may be connected to it while
+that happens.
 
-## What the script does
+## So this is a migration with downtime
 
-`hack/migrate-awx-to-ascender.sh` performs the move as an ownership swap. Nothing is
-deleted except the custom resource itself, so the pods keep running throughout and the
-database and its volume are never touched.
+`hack/migrate-awx-to-ascender.sh` performs it.
 
 ```bash
 ./hack/migrate-awx-to-ascender.sh -n <namespace> <name>            # prints the plan, changes nothing
@@ -38,25 +37,38 @@ database and its volume are never touched.
 In order, it:
 
 - refuses unless the `Ascender` CRD is installed, the named `AWX` exists, no `Ascender`
-  of that name is in the way, and every deployment and statefulset is fully ready
-- records every object carrying an owner reference to the custom resource, and the uid of
-  every pod, to a state directory
-- deletes the custom resource with `--cascade=orphan`, which leaves those objects running
-- creates the `Ascender` from the saved spec, under the same name
-- copies the saved `status` across, so the secret names and `upgradedPostgresVersion` are
-  not derived a second time
-- repoints the owner reference of every recorded object at the new custom resource
-- verifies the object set is unchanged and that no pod was replaced, by uid
-- reports any `AWXBackup` or `AWXRestore` that names this deployment, since those default
-  to `deployment_kind: AWX` and will no longer find it
+  of that name is in the way, every deployment and statefulset is ready, and the postgres
+  configuration secret says `type: managed`
+- records every object carrying an owner reference to the resource, and the uid of every
+  pod, to a state directory
+- scales the web and task Deployments to zero and waits for their pods to go, which is
+  where the deployment stops serving
+- renames the database and its role to `ascender` inside the postgres pod, and writes both
+  into the postgres configuration secret
+- deletes the resource with `--cascade=orphan`, then deletes the two Deployments and the
+  StatefulSet, whose selectors cannot be changed
+- creates the `Ascender` from the saved spec, under the same name, and copies the status
+  across so the secret names and `upgradedPostgresVersion` are not derived again
+- repoints the owner references of everything that survived, and drops the leftover
+  `<name>-awx-configmap` and `<name>-awx-pre-stop-scripts`
+- waits for the operator to rebuild what it removed, which is where serving resumes
 
-The PersistentVolumeClaim never appears in that inventory. It is created by the
-StatefulSet from `volumeClaimTemplates` and carries no owner reference to the custom
-resource, which is exactly why the data is not at risk here.
+## What is never copied
+
+The data. The PersistentVolumeClaim comes from `volumeClaimTemplates` and carries no
+owner reference to the resource, so it is not deleted and the rebuilt StatefulSet binds
+the same volume. The database is renamed in place rather than dumped and reloaded, and
+the secrets outlive the resource because `garbage_collect_secrets` defaults to `false`.
+
+## An external database
+
+The script refuses when the postgres configuration secret says `type: unmanaged`. It will
+only rename a database the operator manages. Rename the database and its role yourself,
+update the secret, and re-run with `--resume`.
 
 ## Reversing it
 
-The state directory is what makes the move reversible:
+The state directory is what makes the move reversible, database included:
 
 ```bash
 ./hack/migrate-awx-to-ascender.sh -n <namespace> <name> --rollback --state-dir <dir> --apply
@@ -64,17 +76,16 @@ The state directory is what makes the move reversible:
 
 ## If it stops part way
 
-Between the delete and the create the deployment is running but unmanaged. That is not an
-outage, since no workload is touched, but an ordinary re-run would find no `AWX` to
-migrate. Carry on from the saved state instead:
+Carry on from the saved state rather than starting again:
 
 ```bash
 ./hack/migrate-awx-to-ascender.sh -n <namespace> <name> --apply --resume --state-dir <dir>
 ```
 
-Every step from the create onwards tolerates being run twice.
+Every step is written to tolerate being run twice: a rename that has already happened is
+skipped, and a resource that already exists is left alone.
 
 ## Afterwards
 
 Recreate any backup or restore objects for this deployment as `AscenderBackup` and
-`AscenderRestore`. The script lists the ones it found.
+`AscenderRestore`. They default to `deployment_kind: AWX` and will no longer find it.
