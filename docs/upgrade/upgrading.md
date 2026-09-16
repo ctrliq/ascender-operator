@@ -71,6 +71,6 @@ $ kubectl -n default delete clusterrolebinding awx-operator
 $ kubectl -n default delete clusterrole awx-operator
 ```
 
-Then install the new Ascender Operator by following the instructions in [Basic Install](#basic-install-on-existing-cluster). The `NAMESPACE` environment variable have to be the name of the namespace in which your old Ascender instance resides.
+Then install the new Ascender Operator by following the instructions in [Basic Install](../installation/basic-install.md). The `NAMESPACE` environment variable have to be the name of the namespace in which your old Ascender instance resides.
 
 Once the new Ascender Operator is up and running, your Ascender deployment will also be upgraded.

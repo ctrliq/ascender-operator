@@ -36,4 +36,4 @@ spec:
   init_projects_container_image: myorg/my-mirrored-centos:stream9
 ```
 
-**Note**: The `image` and `image_version` are intended for local mirroring scenarios. `DEFAULT_AWX_VERSION` controls the main Ascender image tag and we are now changing the execution environment default to the same pinned release for `ghcr.io/ctrliq/ascender-ee` unless you override them explicitly. For the current defaults, check [roles/installer/defaults/main.yml](/home/weyerkaa/ascender-operator/roles/installer/defaults/main.yml).
+**Note**: The `image` and `image_version` are intended for local mirroring scenarios. `DEFAULT_AWX_VERSION` controls the main Ascender image tag and we are now changing the execution environment default to the same pinned release for `ghcr.io/ctrliq/ascender-ee` unless you override them explicitly. For the current defaults, check [roles/installer/defaults/main.yml](https://github.com/ctrliq/ascender-operator/blob/devel/roles/installer/defaults/main.yml).
