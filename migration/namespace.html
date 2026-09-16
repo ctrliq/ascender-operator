@@ -8,37 +8,37 @@
       
       
       
-        <link rel="canonical" href="https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/custom-receptor-certs.html">
+        <link rel="canonical" href="https://ctrliq.github.io/ascender-operator/migration/namespace.html">
       
       
-        <link rel="prev" href="trusting-a-custom-certificate-authority.html">
+        <link rel="prev" href="awx-to-ascender.html">
       
       
-        <link rel="next" href="enabling-ldap-integration-at-awx-bootstrap.html">
+        <link rel="next" href="../uninstall/uninstall.html">
       
       
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.ico">
+      <link rel="icon" href="../assets/images/favicon.ico">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>Custom receptor certs - Ascender Operator Documentation</title>
+        <title>Moving a deployment to the ascender namespace - Ascender Operator Documentation</title>
       
     
      
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
 
     
-<link rel="stylesheet" href="../../assets/stylesheets/ansible.css" />
+<link rel="stylesheet" href="../assets/stylesheets/ansible.css" />
 
     
       
@@ -53,11 +53,11 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/_markdown_exec_pyodide.css">
+      <link rel="stylesheet" href="../assets/_markdown_exec_pyodide.css">
     
-      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -81,6 +81,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#moving-a-deployment-to-the-ascender-namespace" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -93,7 +98,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../index.html" title="Ascender Operator Documentation" class="md-header__button md-logo" aria-label="Ascender Operator Documentation" data-md-component="logo">
+    <a href="../index.html" title="Ascender Operator Documentation" class="md-header__button md-logo" aria-label="Ascender Operator Documentation" data-md-component="logo">
       
   
   <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -119,7 +124,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Custom receptor certs
+              Moving a deployment to the ascender namespace
             
           </span>
         </div>
@@ -244,7 +249,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../index.html" title="Ascender Operator Documentation" class="md-nav__button md-logo" aria-label="Ascender Operator Documentation" data-md-component="logo">
+    <a href="../index.html" title="Ascender Operator Documentation" class="md-nav__button md-logo" aria-label="Ascender Operator Documentation" data-md-component="logo">
       
   
   <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -280,7 +285,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../index.html" class="md-nav__link">
+      <a href="../index.html" class="md-nav__link">
         
   
   
@@ -373,7 +378,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributors-guide/contributing.html" class="md-nav__link">
+      <a href="../contributors-guide/contributing.html" class="md-nav__link">
         
   
   
@@ -401,7 +406,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributors-guide/release-process.html" class="md-nav__link">
+      <a href="../contributors-guide/release-process.html" class="md-nav__link">
         
   
   
@@ -429,7 +434,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributors-guide/author.html" class="md-nav__link">
+      <a href="../contributors-guide/author.html" class="md-nav__link">
         
   
   
@@ -457,7 +462,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributors-guide/code-of-conduct.html" class="md-nav__link">
+      <a href="../contributors-guide/code-of-conduct.html" class="md-nav__link">
         
   
   
@@ -485,7 +490,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributors-guide/get-involved.html" class="md-nav__link">
+      <a href="../contributors-guide/get-involved.html" class="md-nav__link">
         
   
   
@@ -553,7 +558,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../installation/index.html" class="md-nav__link ">
+            <a href="../installation/index.html" class="md-nav__link ">
               
   
   
@@ -597,7 +602,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/basic-install.html" class="md-nav__link">
+      <a href="../installation/basic-install.html" class="md-nav__link">
         
   
   
@@ -625,7 +630,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/kind-install.html" class="md-nav__link">
+      <a href="../installation/kind-install.html" class="md-nav__link">
         
   
   
@@ -653,7 +658,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/creating-a-minikube-cluster-for-testing.html" class="md-nav__link">
+      <a href="../installation/creating-a-minikube-cluster-for-testing.html" class="md-nav__link">
         
   
   
@@ -681,7 +686,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/helm-install-on-existing-cluster.html" class="md-nav__link">
+      <a href="../installation/helm-install-on-existing-cluster.html" class="md-nav__link">
         
   
   
@@ -713,8 +718,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -733,13 +740,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
@@ -760,7 +765,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -778,7 +783,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../migration/migration.html" class="md-nav__link">
+      <a href="migration.html" class="md-nav__link">
         
   
   
@@ -806,7 +811,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../migration/awx-to-ascender.html" class="md-nav__link">
+      <a href="awx-to-ascender.html" class="md-nav__link">
         
   
   
@@ -831,10 +836,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../migration/namespace.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Moving a deployment to the ascender namespace
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="namespace.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -850,6 +882,70 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nothing-happens-to-an-existing-install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nothing happens to an existing install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-there-is-no-in-place-move" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why there is no in-place move
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-shape-of-the-move" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The shape of the move
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whether-it-is-worth-doing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Whether it is worth doing
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -927,7 +1023,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../uninstall/uninstall.html" class="md-nav__link">
+      <a href="../uninstall/uninstall.html" class="md-nav__link">
         
   
   
@@ -1024,7 +1120,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../admin-user-account-configuration.html" class="md-nav__link">
+      <a href="../user-guide/admin-user-account-configuration.html" class="md-nav__link">
         
   
   
@@ -1052,7 +1148,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../network-and-tls-configuration.html" class="md-nav__link">
+      <a href="../user-guide/network-and-tls-configuration.html" class="md-nav__link">
         
   
   
@@ -1080,7 +1176,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../database-configuration.html" class="md-nav__link">
+      <a href="../user-guide/database-configuration.html" class="md-nav__link">
         
   
   
@@ -1173,7 +1269,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../upgrade/upgrading.html" class="md-nav__link">
+      <a href="../upgrade/upgrading.html" class="md-nav__link">
         
   
   
@@ -1205,10 +1301,8 @@
       
   
   
-    
   
   
-  
     
     
       
@@ -1281,11 +1375,13 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
         
           
           <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
@@ -1306,7 +1402,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1324,7 +1420,7 @@
   
   
     <li class="md-nav__item">
-      <a href="deploying-a-specific-version-of-awx.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/deploying-a-specific-version-of-awx.html" class="md-nav__link">
         
   
   
@@ -1352,7 +1448,7 @@
   
   
     <li class="md-nav__item">
-      <a href="redis-container-capabilities.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/redis-container-capabilities.html" class="md-nav__link">
         
   
   
@@ -1380,7 +1476,7 @@
   
   
     <li class="md-nav__item">
-      <a href="container-probes.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/container-probes.html" class="md-nav__link">
         
   
   
@@ -1408,7 +1504,7 @@
   
   
     <li class="md-nav__item">
-      <a href="horizontal-pod-autoscaler.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/horizontal-pod-autoscaler.html" class="md-nav__link">
         
   
   
@@ -1436,7 +1532,7 @@
   
   
     <li class="md-nav__item">
-      <a href="resource-cleanup.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/resource-cleanup.html" class="md-nav__link">
         
   
   
@@ -1464,7 +1560,7 @@
   
   
     <li class="md-nav__item">
-      <a href="privileged-tasks.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/privileged-tasks.html" class="md-nav__link">
         
   
   
@@ -1492,7 +1588,7 @@
   
   
     <li class="md-nav__item">
-      <a href="security-context.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/security-context.html" class="md-nav__link">
         
   
   
@@ -1520,7 +1616,7 @@
   
   
     <li class="md-nav__item">
-      <a href="containers-resource-requirements.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/containers-resource-requirements.html" class="md-nav__link">
         
   
   
@@ -1548,7 +1644,7 @@
   
   
     <li class="md-nav__item">
-      <a href="priority-classes.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/priority-classes.html" class="md-nav__link">
         
   
   
@@ -1576,7 +1672,7 @@
   
   
     <li class="md-nav__item">
-      <a href="adding-execution-nodes.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/adding-execution-nodes.html" class="md-nav__link">
         
   
   
@@ -1604,7 +1700,7 @@
   
   
     <li class="md-nav__item">
-      <a href="scaling-the-web-and-task-pods-independently.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/scaling-the-web-and-task-pods-independently.html" class="md-nav__link">
         
   
   
@@ -1632,7 +1728,7 @@
   
   
     <li class="md-nav__item">
-      <a href="assigning-awx-pods-to-specific-nodes.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/assigning-awx-pods-to-specific-nodes.html" class="md-nav__link">
         
   
   
@@ -1660,7 +1756,7 @@
   
   
     <li class="md-nav__item">
-      <a href="trusting-a-custom-certificate-authority.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/trusting-a-custom-certificate-authority.html" class="md-nav__link">
         
   
   
@@ -1685,17 +1781,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-      <a href="custom-receptor-certs.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../user-guide/advanced-configuration/custom-receptor-certs.html" class="md-nav__link">
         
   
   
@@ -1711,7 +1800,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1724,7 +1812,7 @@
   
   
     <li class="md-nav__item">
-      <a href="enabling-ldap-integration-at-awx-bootstrap.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/enabling-ldap-integration-at-awx-bootstrap.html" class="md-nav__link">
         
   
   
@@ -1752,7 +1840,7 @@
   
   
     <li class="md-nav__item">
-      <a href="persisting-projects-directory.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/persisting-projects-directory.html" class="md-nav__link">
         
   
   
@@ -1780,7 +1868,7 @@
   
   
     <li class="md-nav__item">
-      <a href="custom-volume-and-volume-mount-options.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/custom-volume-and-volume-mount-options.html" class="md-nav__link">
         
   
   
@@ -1808,7 +1896,7 @@
   
   
     <li class="md-nav__item">
-      <a href="default-execution-environments-from-private-registries.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/default-execution-environments-from-private-registries.html" class="md-nav__link">
         
   
   
@@ -1836,7 +1924,7 @@
   
   
     <li class="md-nav__item">
-      <a href="exporting-environment-variables-to-containers.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/exporting-environment-variables-to-containers.html" class="md-nav__link">
         
   
   
@@ -1864,7 +1952,7 @@
   
   
     <li class="md-nav__item">
-      <a href="csrf-cookie-secure-setting.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/csrf-cookie-secure-setting.html" class="md-nav__link">
         
   
   
@@ -1892,7 +1980,7 @@
   
   
     <li class="md-nav__item">
-      <a href="session-cookie-secure-setting.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/session-cookie-secure-setting.html" class="md-nav__link">
         
   
   
@@ -1920,7 +2008,7 @@
   
   
     <li class="md-nav__item">
-      <a href="disable-all-schedules-setting.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/disable-all-schedules-setting.html" class="md-nav__link">
         
   
   
@@ -1948,7 +2036,7 @@
   
   
     <li class="md-nav__item">
-      <a href="extra-settings.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/extra-settings.html" class="md-nav__link">
         
   
   
@@ -1976,7 +2064,7 @@
   
   
     <li class="md-nav__item">
-      <a href="no-log.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/no-log.html" class="md-nav__link">
         
   
   
@@ -2004,7 +2092,7 @@
   
   
     <li class="md-nav__item">
-      <a href="auto-upgrade.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/auto-upgrade.html" class="md-nav__link">
         
   
   
@@ -2032,7 +2120,7 @@
   
   
     <li class="md-nav__item">
-      <a href="service-account.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/service-account.html" class="md-nav__link">
         
   
   
@@ -2060,7 +2148,7 @@
   
   
     <li class="md-nav__item">
-      <a href="labeling-operator-managed-objects.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/labeling-operator-managed-objects.html" class="md-nav__link">
         
   
   
@@ -2088,7 +2176,7 @@
   
   
     <li class="md-nav__item">
-      <a href="pods-termination-grace-period.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/pods-termination-grace-period.html" class="md-nav__link">
         
   
   
@@ -2116,7 +2204,7 @@
   
   
     <li class="md-nav__item">
-      <a href="disable-ipv6.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/disable-ipv6.html" class="md-nav__link">
         
   
   
@@ -2144,7 +2232,7 @@
   
   
     <li class="md-nav__item">
-      <a href="mesh-ingress.html" class="md-nav__link">
+      <a href="../user-guide/advanced-configuration/mesh-ingress.html" class="md-nav__link">
         
   
   
@@ -2237,7 +2325,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../troubleshooting/debugging.html" class="md-nav__link">
+      <a href="../troubleshooting/debugging.html" class="md-nav__link">
         
   
   
@@ -2282,7 +2370,7 @@
 
 
   
-    <a href="https://github.com/ctrliq/ascender-operator/blob/devel/docs/user-guide/advanced-configuration/custom-receptor-certs.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/ctrliq/ascender-operator/blob/devel/docs/migration/namespace.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -2290,21 +2378,44 @@
   
 
 
-  <h1>Custom receptor certs</h1>
-
-<h3 id="custom-receptor-ca">Custom Receptor CA<a class="headerlink" href="#custom-receptor-ca" title="Permanent link">&para;</a></h3>
-<p>The control nodes on the K8S cluster will communicate with execution nodes via mutual TLS TCP connections, running via Receptor.
-Execution nodes will verify incoming connections by ensuring the x509 certificate was issued by a trusted Certificate Authority (CA).</p>
-<p>A user may wish to provide their own CA for this validation. If no CA is provided, Ascender Operator will automatically generate one using OpenSSL.</p>
-<p>Given custom <code>ca.crt</code> and <code>ca.key</code> stored locally, run the following,</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>kubectl<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>tls<span class="w"> </span>ascender-demo-receptor-ca<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">   </span>--cert<span class="o">=</span>/path/to/ca.crt<span class="w"> </span>--key<span class="o">=</span>/path/to/ca.key
-</code></pre></div>
-<p>The secret should be named <code>{AWX Custom Resource name}-receptor-ca</code>. In the above the AWX CR name is "ascender-demo". Please replace "ascender-demo" with your AWX Custom Resource name.</p>
-<p>If this secret is created after Ascender is deployed, run the following to restart the deployment,</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>kubectl<span class="w"> </span>rollout<span class="w"> </span>restart<span class="w"> </span>deployment<span class="w"> </span>ascender-demo
-</code></pre></div>
-<p><strong>Important Note</strong>, changing the receptor CA will break connections to any existing execution nodes. These nodes will enter an <code>unavailable</code> state, and jobs will not be able to run on them. Users will need to download and re-run the install bundle for each execution node. This will replace the TLS certificate files with those signed by the new CA. The execution nodes should then appear in a <code>ready</code> state after a few minutes.</p>
+<h1 id="moving-a-deployment-to-the-ascender-namespace">Moving a deployment to the ascender namespace<a class="headerlink" href="#moving-a-deployment-to-the-ascender-namespace" title="Permanent link">&para;</a></h1>
+<p>A fresh install lands in the <code>ascender</code> namespace. An install made before that
+lands in <code>awx</code>, and it keeps working there indefinitely.</p>
+<h2 id="nothing-happens-to-an-existing-install">Nothing happens to an existing install<a class="headerlink" href="#nothing-happens-to-an-existing-install" title="Permanent link">&para;</a></h2>
+<p>The operator is namespace scoped: <code>WATCH_NAMESPACE</code> is its own namespace, so the
+operator running in <code>awx</code> manages the deployment in <code>awx</code> and nothing else. That has
+one consequence worth being plain about.</p>
+<p>Applying the new manifests over an install that lives in <code>awx</code> <strong>does not move it</strong>.
+It stands a second operator up in a new <code>ascender</code> namespace, watching nothing, while
+the old operator carries on managing the deployment exactly as before. Nothing breaks,
+and nothing is upgraded either. If that is what happened, delete the objects in the
+<code>ascender</code> namespace and carry on: the deployment was never touched.</p>
+<h2 id="why-there-is-no-in-place-move">Why there is no in-place move<a class="headerlink" href="#why-there-is-no-in-place-move" title="Permanent link">&para;</a></h2>
+<p>A Kubernetes object cannot change namespace. Neither can a PersistentVolumeClaim, so
+the database cannot simply follow. Moving a deployment across is a backup taken in one
+namespace and restored in another, which means downtime and a verified backup, not an
+upgrade.</p>
+<h2 id="the-shape-of-the-move">The shape of the move<a class="headerlink" href="#the-shape-of-the-move" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Take a backup in the old namespace with an <code>AscenderBackup</code>, and wait for it to
+   report a <code>backupDirectory</code> in its status.</li>
+<li>Copy the backup out of its PersistentVolumeClaim to somewhere outside the cluster.
+   The installer repositories' backup roles do this with <code>k8s_cp</code>.</li>
+<li>Create the new namespace and install the operator into it.</li>
+<li>Put the backup where the new namespace can reach it, in a claim of its own.</li>
+<li>Create an <code>AscenderRestore</code> in the new namespace pointing at that claim and the
+   backup directory, with the secrets the backup recorded.</li>
+<li>Check the restored deployment before deleting anything, then remove the old
+   namespace once you are satisfied.</li>
+</ol>
+<p>Steps 1, 2, 5 and 6 are the ordinary backup and restore procedure, which the backup and
+restore role documentation covers in full. Nothing here is specific to the rename except
+the reason for doing it.</p>
+<h2 id="whether-it-is-worth-doing">Whether it is worth doing<a class="headerlink" href="#whether-it-is-worth-doing" title="Permanent link">&para;</a></h2>
+<p>The namespace is a name, and the deployment works the same in either. The reasons to
+move are consistency with a fleet of newer installs, and not having a namespace called
+<code>awx</code> in a product called Ascender. Neither is urgent, and the move costs a maintenance
+window, so an install that is happy where it is can stay there.</p>
 
 
 
@@ -2354,12 +2465,12 @@ Execution nodes will verify incoming connections by ensuring the x509 certificat
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.action.edit", "navigation.expand", "navigation.sections", "navigation.instant", "navigation.indexes", "navigation.tracking", "toc.integrate", "search.highlight", "search.share", "search.suggest"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.action.edit", "navigation.expand", "navigation.sections", "navigation.instant", "navigation.indexes", "navigation.tracking", "toc.integrate", "search.highlight", "search.share", "search.suggest"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
-        <script src="../../assets/_markdown_exec_pyodide.js"></script>
+        <script src="../assets/_markdown_exec_pyodide.js"></script>
       
     
   </body>
