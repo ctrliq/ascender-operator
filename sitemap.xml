@@ -2,202 +2,202 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/index.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/contributors-guide/author.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/contributors-guide/code-of-conduct.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/contributors-guide/contributing.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/contributors-guide/get-involved.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/contributors-guide/release-process.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/installation/index.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/installation/basic-install.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/installation/creating-a-minikube-cluster-for-testing.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/installation/helm-install-on-existing-cluster.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/installation/kind-install.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/migration/awx-to-ascender.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/migration/migration.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/migration/namespace.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/troubleshooting/debugging.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/uninstall/uninstall.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/upgrade/upgrading.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/admin-user-account-configuration.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/database-configuration.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/network-and-tls-configuration.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/adding-execution-nodes.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/assigning-awx-pods-to-specific-nodes.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/auto-upgrade.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/container-probes.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/containers-resource-requirements.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/csrf-cookie-secure-setting.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/custom-receptor-certs.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/custom-volume-and-volume-mount-options.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/default-execution-environments-from-private-registries.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/deploying-a-specific-version-of-awx.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/disable-all-schedules-setting.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/disable-ipv6.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/enabling-ldap-integration-at-awx-bootstrap.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/exporting-environment-variables-to-containers.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/extra-settings.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/horizontal-pod-autoscaler.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/labeling-operator-managed-objects.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/mesh-ingress.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/no-log.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/persisting-projects-directory.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/pods-termination-grace-period.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/priority-classes.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/privileged-tasks.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/redis-container-capabilities.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/resource-cleanup.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/scaling-the-web-and-task-pods-independently.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/security-context.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/service-account.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/session-cookie-secure-setting.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
     <url>
          <loc>https://ctrliq.github.io/ascender-operator/user-guide/advanced-configuration/trusting-a-custom-certificate-authority.html</loc>
-         <lastmod>2026-09-16</lastmod>
+         <lastmod>2026-09-17</lastmod>
     </url>
 </urlset>

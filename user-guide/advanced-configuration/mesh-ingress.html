@@ -2212,10 +2212,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deploy-and-configure-awxmeshingress" class="md-nav__link">
+  <a href="#deploy-and-configure-ascendermeshingress" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Deploy and configure AWXMeshIngress
+        Deploy and configure AscenderMeshIngress
       
     </span>
   </a>
@@ -2387,7 +2387,7 @@ For more information about remote execution and hop nodes and how to create them
 <li>AWX operator version &gt; 2.11.0</li>
 <li>AWX &gt; 23.8.0</li>
 </ul>
-<h2 id="deploy-and-configure-awxmeshingress">Deploy and configure AWXMeshIngress<a class="headerlink" href="#deploy-and-configure-awxmeshingress" title="Permanent link">&para;</a></h2>
+<h2 id="deploy-and-configure-ascendermeshingress">Deploy and configure AscenderMeshIngress<a class="headerlink" href="#deploy-and-configure-ascendermeshingress" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The mesh ingress uses the <code>control_plane_ee_image</code> and <code>image_pull_policy</code> fields of the Ascender instance to determine image and policy to be adopted.
@@ -2395,7 +2395,7 @@ Defaulted to <code>quay.io/ansible/awx-ee:latest</code> and <code>Always</code>.
 Currently there are no dedicated parameters to specify the image and policy.</p>
 </div>
 <h3 id="on-red-hat-openshift-with-operator-managed-route">On Red Hat OpenShift with Operator managed Route<a class="headerlink" href="#on-red-hat-openshift-with-operator-managed-route" title="Permanent link">&para;</a></h3>
-<p>To deploy a mesh ingress on OpenShift, create the AWXMeshIngress resource on the namespace where your Ascender instance is running on.</p>
+<p>To deploy a mesh ingress on OpenShift, create the AscenderMeshIngress resource on the namespace where your Ascender instance is running on.</p>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nn">---</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ascender.ansible.com/v1alpha1</span>
@@ -2406,8 +2406,8 @@ Currently there are no dedicated parameters to specify the image and policy.</p>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="nt">deployment_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;awx instance name&gt;</span>
 </code></pre></div>
 <h3 id="on-kubernetes-with-operator-managed-ingress-nginx">On Kubernetes with Operator managed Ingress (NGINX)<a class="headerlink" href="#on-kubernetes-with-operator-managed-ingress-nginx" title="Permanent link">&para;</a></h3>
-<p>To deploy a mesh ingress on Kubernetes cluster which has <a href="https://www.nginx.com/products/nginx-ingress-controller/">NGINX Ingress Controller</a>, create the AWXMeshIngress resource on the namespace where your Ascender instance is running on.</p>
-<p>Note that AWXMeshIngress requires <a href="https://kubernetes.github.io/ingress-nginx/user-guide/tls/#ssl-passthrough">SSL Passthrough</a> enabled which is disabled by default. Ensure it is enabled on your NGINX Ingress Controller.</p>
+<p>To deploy a mesh ingress on Kubernetes cluster which has <a href="https://www.nginx.com/products/nginx-ingress-controller/">NGINX Ingress Controller</a>, create the AscenderMeshIngress resource on the namespace where your Ascender instance is running on.</p>
+<p>Note that AscenderMeshIngress requires <a href="https://kubernetes.github.io/ingress-nginx/user-guide/tls/#ssl-passthrough">SSL Passthrough</a> enabled which is disabled by default. Ensure it is enabled on your NGINX Ingress Controller.</p>
 <p>By specifying <code>ingress_controller</code> as <code>nginx</code>, Ascender Operator will generate Ingress resource that has <code>nginx.ingress.kubernetes.io/ssl-passthrough</code> annotation set to <code>"true"</code>.</p>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nn">---</span>
@@ -2425,8 +2425,8 @@ Currently there are no dedicated parameters to specify the image and policy.</p>
 <a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">  </span><span class="nt">external_hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;fqdn for mesh ingress&gt;</span>
 </code></pre></div>
 <h3 id="on-kubernetes-with-operator-managed-ingress-traefik">On Kubernetes with Operator managed Ingress (Traefik)<a class="headerlink" href="#on-kubernetes-with-operator-managed-ingress-traefik" title="Permanent link">&para;</a></h3>
-<p>To deploy a mesh ingress on Kubernetes cluster which has <a href="https://doc.traefik.io/traefik/providers/kubernetes-ingress/">Traefik Kubernetes Ingress provider</a>, create the AWXMeshIngress resource on the namespace where your Ascender instance is running on.</p>
-<p>Note that by deploying following AWXMeshIngress, Ascender Operator will generate IngressRouteTCP resource that has <code>websecure</code> as an <code>entryPoints</code>. If this does not satisfy your requirement, refer to <a href="#on-kubernetes-with-user-managed-ingress">User managed Ingress section</a> and  create an IngressRouteTCP resource manually.</p>
+<p>To deploy a mesh ingress on Kubernetes cluster which has <a href="https://doc.traefik.io/traefik/providers/kubernetes-ingress/">Traefik Kubernetes Ingress provider</a>, create the AscenderMeshIngress resource on the namespace where your Ascender instance is running on.</p>
+<p>Note that by deploying following AscenderMeshIngress, Ascender Operator will generate IngressRouteTCP resource that has <code>websecure</code> as an <code>entryPoints</code>. If this does not satisfy your requirement, refer to <a href="#on-kubernetes-with-user-managed-ingress">User managed Ingress section</a> and  create an IngressRouteTCP resource manually.</p>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nn">---</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ascender.ansible.com/v1alpha1</span>
@@ -2449,7 +2449,7 @@ Currently there are no dedicated parameters to specify the image and policy.</p>
 <p>If you can't see any IngressRouteTCP resources by <code>kubectl</code> command after deploying mesh ingress, you should fully qualify the resource name with API group, <code>kubectl get ingressroutetcp.traefik.io</code> or <code>kubectl get ingressroutetcp.traefik.containo.us</code> for example.</p>
 </div>
 <h3 id="on-kubernetes-with-user-managed-ingress">On Kubernetes with User managed Ingress<a class="headerlink" href="#on-kubernetes-with-user-managed-ingress" title="Permanent link">&para;</a></h3>
-<p>To deploy a mesh ingress on Kubernetes cluster, create the AWXMeshIngress resource on the namespace where your Ascender instance is running on.</p>
+<p>To deploy a mesh ingress on Kubernetes cluster, create the AscenderMeshIngress resource on the namespace where your Ascender instance is running on.</p>
 <p>Alternatively, if you wish to create your own Ingress resource, you can deploy a mesh ingress with <code>ingress_type</code> set to <code>none</code> and then manually create an Ingress resource with any configuration.</p>
 <p>In this case, the <code>external_hostname</code> is still required as it is used to generate the certificate that will be used by Receptor.</p>
 <p>Example:</p>
@@ -2469,8 +2469,8 @@ Currently there are no dedicated parameters to specify the image and policy.</p>
 <li>Supports WebSocket</li>
 <li>SSL/TLS Passthrough enabled</li>
 <li>Accessible over port <code>443</code></li>
-<li>Having the same hostname as <code>external_hostname</code> in the AWXMeshIngress resource</li>
-<li>Routing the traffic to port <code>27199</code> of the Service of the same name as the AWXMeshIngress resource</li>
+<li>Having the same hostname as <code>external_hostname</code> in the AscenderMeshIngress resource</li>
+<li>Routing the traffic to port <code>27199</code> of the Service of the same name as the AscenderMeshIngress resource</li>
 </ul>
 <p>These are example Ingress resources for NGINX and Traefik.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Ingress for NGINX Ingress Controller</span>
@@ -2513,7 +2513,7 @@ Currently there are no dedicated parameters to specify the image and policy.</p>
 <a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">    </span><span class="nt">passthrough</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </code></pre></div>
 <h2 id="validating-setup-of-mesh-ingress">Validating setup of Mesh Ingress<a class="headerlink" href="#validating-setup-of-mesh-ingress" title="Permanent link">&para;</a></h2>
-<p>After AWXMeshIngress has been successfully created, a new Instance with the same name will be registered to Ascender and will be visible on the Instance UI page</p>
+<p>After AscenderMeshIngress has been successfully created, a new Instance with the same name will be registered to Ascender and will be visible on the Instance UI page</p>
 <p><img alt="mesh ingress instance on Ascender UI" src="mesh-ingress-instance-on-awx-ui.png" /></p>
 <p>The Instance should have at least 2 listener addresses.</p>
 <p>In this example, the mesh ingress has two listener addresses:</p>
@@ -2526,8 +2526,8 @@ Currently there are no dedicated parameters to specify the image and policy.</p>
 <img alt="peering to mesh ingress on awx ui" src="peering-to-mesh-ingress-on-awx-ui.png" /></p>
 <p>For more information about how to create external remote execution and hop nodes and configuring the mesh, see the AWX documentation on <a href="https://ansible.readthedocs.io/projects/awx/en/latest/administration/instances.html#add-an-instance">Add a instance</a>.</p>
 <h2 id="custom-resource-definitions">Custom Resource Definitions<a class="headerlink" href="#custom-resource-definitions" title="Permanent link">&para;</a></h2>
-<h3 id="awxmeshingress">AWXMeshIngress<a class="headerlink" href="#awxmeshingress" title="Permanent link">&para;</a></h3>
-<p>AWXMeshIngress controls the deployment and configuration of mesh ingress on Ascender</p>
+<h3 id="ascendermeshingress">AscenderMeshIngress<a class="headerlink" href="#ascendermeshingress" title="Permanent link">&para;</a></h3>
+<p>AscenderMeshIngress controls the deployment and configuration of mesh ingress on Ascender</p>
 <table>
 <thead>
 <tr>
@@ -2549,17 +2549,17 @@ Currently there are no dedicated parameters to specify the image and policy.</p>
 <td>Standard object's metadata. <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata">More info</a></td>
 </tr>
 <tr>
-<td><strong><code>spec</code></strong> (<a href="#awxmeshingressspec">AWXMeshIngressSpec</a>)</td>
-<td>Spec is the desired state of the AWXMeshIngress. <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status">More info</a></td>
+<td><strong><code>spec</code></strong> (<a href="#ascendermeshingressspec">AscenderMeshIngressSpec</a>)</td>
+<td>Spec is the desired state of the AscenderMeshIngress. <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status">More info</a></td>
 </tr>
 <tr>
-<td><strong><code>status</code></strong> (<a href="#awxmeshingressstatus">AWXMeshIngressStatus</a>)</td>
-<td>Status is the current state of the AWXMeshIngress. <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status">More info</a></td>
+<td><strong><code>status</code></strong> (<a href="#ascendermeshingressstatus">AscenderMeshIngressStatus</a>)</td>
+<td>Status is the current state of the AscenderMeshIngress. <a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status">More info</a></td>
 </tr>
 </tbody>
 </table>
-<h4 id="awxmeshingressspec">AWXMeshIngressSpec<a class="headerlink" href="#awxmeshingressspec" title="Permanent link">&para;</a></h4>
-<p>AWXMeshIngressSpec is the description of the configuration for AWXMeshIngress.</p>
+<h4 id="ascendermeshingressspec">AscenderMeshIngressSpec<a class="headerlink" href="#ascendermeshingressspec" title="Permanent link">&para;</a></h4>
+<p>AscenderMeshIngressSpec is the description of the configuration for AscenderMeshIngress.</p>
 <table>
 <thead>
 <tr>
@@ -2611,10 +2611,10 @@ Currently there are no dedicated parameters to specify the image and policy.</p>
 </tr>
 </tbody>
 </table>
-<h4 id="awxmeshingressstatus">AWXMeshIngressStatus<a class="headerlink" href="#awxmeshingressstatus" title="Permanent link">&para;</a></h4>
-<p>AWXMeshIngressStatus describe the current state of the AWXMeshIngress.</p>
-<h3 id="awxmeshingresslist">AWXMeshIngressList<a class="headerlink" href="#awxmeshingresslist" title="Permanent link">&para;</a></h3>
-<p>AWXMeshIngressList is a collection of AWXMeshIngress.</p>
+<h4 id="ascendermeshingressstatus">AscenderMeshIngressStatus<a class="headerlink" href="#ascendermeshingressstatus" title="Permanent link">&para;</a></h4>
+<p>AscenderMeshIngressStatus describe the current state of the AscenderMeshIngress.</p>
+<h3 id="ascendermeshingresslist">AscenderMeshIngressList<a class="headerlink" href="#ascendermeshingresslist" title="Permanent link">&para;</a></h3>
+<p>AscenderMeshIngressList is a collection of AscenderMeshIngress.</p>
 <table>
 <thead>
 <tr>
@@ -2624,7 +2624,7 @@ Currently there are no dedicated parameters to specify the image and policy.</p>
 </thead>
 <tbody>
 <tr>
-<td><strong><code>items</code></strong> (<a href="#awxmeshingress">AWXMeshIngress</a>)</td>
+<td><strong><code>items</code></strong> (<a href="#ascendermeshingress">AscenderMeshIngress</a>)</td>
 <td>items is the list of Ingress.</td>
 </tr>
 <tr>
