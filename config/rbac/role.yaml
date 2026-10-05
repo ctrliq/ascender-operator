@@ -152,3 +152,16 @@ rules:
       - patch
       - update
       - watch
+  - apiGroups:
+      - gateway.networking.k8s.io
+    resources:
+      - httproutes
+      - tlsroutes
+    verbs:
+      - get
+      - list
+      - create
+      - delete
+      - patch
+      - update
+      - watch

@@ -1,0 +1,25 @@
+---
+# Fail early when the cluster does not serve the route kind (_route_kind,
+# HTTPRoute or TLSRoute) at v1, or no Gateway is named.
+#
+# Included by path rather than with include_role, so the caller's variables
+# are not shadowed by the common role's defaults.
+- name: Look up the route kind {{ _route_kind }}
+  kubernetes.core.k8s_info:
+    api_version: gateway.networking.k8s.io/v1
+    kind: '{{ _route_kind }}'
+    name: '{{ ansible_operator_meta.name }}'
+    namespace: '{{ ansible_operator_meta.namespace }}'
+  register: _route_api
+
+- name: Check a Gateway is named and the cluster serves v1 {{ _route_kind }}
+  ansible.builtin.assert:
+    that:
+      - _route_api.api_found
+      - gateway_parent_refs | default([], true) | length > 0
+    fail_msg: >-
+      ingress_type {{ ingress_type }} needs gateway.networking.k8s.io/v1 {{ _route_kind }}
+      served by the cluster (Gateway API v1.0 or later for HTTPRoute, v1.5 or later
+      for TLSRoute) and at least one entry in gateway_parent_refs naming the
+      Gateway to attach to.
+    quiet: true
