@@ -18,6 +18,18 @@ ingress_class_name: ''
 ingress_controller: ''
 route_annotations: ''
 
+# Gateway API, used when ingress_type is tlsroute. The operator creates only
+# the TLSRoute; the Gateway listener must use tls.mode Passthrough, because
+# receptor terminates its own TLS. Each entry is a Gateway API ParentReference.
+gateway_parent_refs: []
+
+# Add annotations to the TLSRoute. Specify as literal block.
+gateway_annotations: ''
+
+# The port remote nodes are told to dial on external_hostname: the port of the
+# listener the Ingress, IngressRouteTCP, Route or TLSRoute is served on.
+external_port: 443
+
 set_self_owneref: true
 
 _control_plane_ee_image: "ghcr.io/ctrliq/ascender-ee:{{ lookup('env', 'DEFAULT_AWX_VERSION') or 'latest' }}"
