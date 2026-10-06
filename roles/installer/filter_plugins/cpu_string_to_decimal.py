@@ -4,9 +4,18 @@
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
+from decimal import Decimal, DecimalException
+
 from ansible.errors import AnsibleFilterError
 
-__ERROR_MSG = "Not a valid cpu value. Cannot process value"
+# Module-level on purpose: a double-underscore name read inside the class is
+# mangled to _FilterModule__ERROR_MSG, which does not exist.
+ERROR_MSG = "Not a valid cpu value. Cannot process value"
+
+# Kubernetes reads a CPU limit as int64 millicores, so nothing larger is a
+# limit it could apply. Checked before int(): an exponent such as "1e1000000"
+# would otherwise materialize an enormous integer.
+MAX_MILLICORES = Decimal(2**63 - 1)
 
 class FilterModule(object):
     def filters(self):
@@ -15,13 +24,21 @@ class FilterModule(object):
         }
     def cpu_string_to_decimal(self, cpu_string):
 
-        # verify if task_output is a dict
+        # verify if cpu_string is a string
         if not isinstance(cpu_string, str):
-            raise AnsibleFilterError(__ERROR_MSG)
+            raise AnsibleFilterError(ERROR_MSG)
 
-        if cpu_string[-1] == 'm':
-            cpu = int(cpu_string[:-1])//1000
-        else:
-         cpu = int(cpu_string)
+        # A Kubernetes CPU quantity is either millicores ("1500m") or cores,
+        # which may be fractional ("1.5"). Both round down to whole CPUs.
+        try:
+            if cpu_string.endswith('m'):
+                millicores = Decimal(cpu_string[:-1])
+            else:
+                millicores = Decimal(cpu_string) * 1000
+        except DecimalException:
+            raise AnsibleFilterError("%s: %r" % (ERROR_MSG, cpu_string))
 
-        return cpu
+        if not millicores.is_finite() or not 0 <= millicores <= MAX_MILLICORES:
+            raise AnsibleFilterError("%s: %r" % (ERROR_MSG, cpu_string))
+
+        return int(millicores / 1000)
