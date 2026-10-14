@@ -90,6 +90,18 @@ route_host: ''
 
 hostname: ''
 
+# Gateway API, used when ingress_type is httproute. The operator creates only
+# the HTTPRoute; the Gateway, its listeners and their TLS certificates belong
+# to whoever runs it. Each entry is a Gateway API ParentReference. E.g.:
+# gateway_parent_refs:
+#   - name: shared-gateway
+#     namespace: gateway-system
+#     sectionName: https
+gateway_parent_refs: []
+
+# Add annotations to the HTTPRoute. Specify as literal block.
+gateway_annotations: ''
+
 # Add a nodeSelector for the AWX pods. It must match a node's labels for the pod
 # to be scheduled on that node. Specify as literal block. E.g.:
 # node_selector: |

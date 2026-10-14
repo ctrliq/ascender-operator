@@ -88,6 +88,53 @@ spec:
 
     If you can't see any IngressRouteTCP resources by `kubectl` command after deploying mesh ingress, you should fully qualify the resource name with API group, `kubectl get ingressroutetcp.traefik.io` or `kubectl get ingressroutetcp.traefik.containo.us` for example.
 
+### On Kubernetes with Operator managed Gateway API (TLSRoute)
+
+Ascender Operator can create a [Gateway API](https://gateway-api.sigs.k8s.io/) `TLSRoute` (`gateway.networking.k8s.io/v1`) and attach it to an existing Gateway.
+
+It requires the Gateway API CRDs v1.5.0 or later, a Gateway API implementation that supports TLSRoute, and a Gateway listener with `protocol: TLS` and `tls.mode: Passthrough` that admits TLSRoutes from the mesh ingress namespace. Receptor terminates TLS itself.
+
+```yaml
+listeners:
+  - name: mesh                  # matches sectionName
+    protocol: TLS
+    port: 443
+    hostname: <fqdn for mesh ingress>
+    tls:
+      mode: Passthrough
+    allowedRoutes:
+      kinds:
+        - kind: TLSRoute
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            kubernetes.io/metadata.name: <ascender namespace>
+```
+
+Example:
+
+```yaml
+---
+apiVersion: ascender.ansible.com/v1alpha1
+kind: AscenderMeshIngress
+metadata:
+  name: <mesh ingress name>
+spec:
+  deployment_name: <ascender instance name>
+
+  ingress_type: tlsroute
+  external_hostname: <fqdn for mesh ingress>
+  gateway_parent_refs:
+    - name: <gateway name>
+      namespace: <gateway namespace>
+      sectionName: mesh
+```
+
+`external_hostname` is required; the Gateway routes passthrough traffic by TLS SNI. Remote nodes connect to `external_port`, which defaults to 443 and must match the listener port.
+
+Changing `ingress_type` follows [the same rules as the Ascender instance](../network-and-tls-configuration.md#changing-ingress_type). When switching to `tlsroute`, the previous object is deleted only after the TLSRoute is accepted.
+
 ### On Kubernetes with User managed Ingress
 
 To deploy a mesh ingress on Kubernetes cluster, create the AscenderMeshIngress resource on the namespace where your Ascender instance is running on.
@@ -205,13 +252,16 @@ AscenderMeshIngressSpec is the description of the configuration for AscenderMesh
 | Name                                     | Description                                                                                                                                                                                                                                 | Default                                        |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
 | **`deployment_name`** (string), required | Name of the Ascender deployment to create the Mesh Ingress for.                                                                                                                                                                                  | `awx`                                          |
-| **`ingress_type`** (string)              | Ingress type for ingress managed by the operator. Options: `none`, `Ingress`, `IngressRouteTCP`, `Route`                                                                                                                                    | `Route` (on OpenShift), `none` (on Kubernetes) |
+| **`ingress_type`** (string)              | Ingress type for ingress managed by the operator. Options: `none`, `Ingress`, `IngressRouteTCP`, `Route`, `TLSRoute`, in any case. See [Changing ingress_type](../network-and-tls-configuration.md#changing-ingress_type)                                | `Route` (on OpenShift), `none` (on Kubernetes) |
 | **`external_hostname`** (string)         | External hostname is an optional field used for specifying the external hostname defined in an [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/). This parameter is automatically generated on OpenShift          | N/A                                            |
 | **`external_ipaddress`** (string)        | External IP Address is an optional field used for specifying the external IP address defined in an [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)                                                              | N/A                                            |
+| **`external_port`** (integer)            | Port remote nodes dial on `external_hostname`: the port of the listener the mesh ingress is served on                                                                                                                                      | `443`                                          |
 | **`ingress_api_version`** (string)       | API Version for ingress managed by the operator. This parameter is ignored when `ingress_type` is `Route`                                                                                                                                   | `networking.k8s.io/v1`                         |
 | **`ingress_annotations`** (string)       | Additional annotation on the ingress managed by the operator. This parameter is ignored when `ingress_type` is `Route`                                                                                                                      | `""`                                           |
 | **`ingress_controller`** (string)        | Special configuration for specific Ingress Controllers. This parameter is ignored when `ingress_type` is `Route`                                                                                                                            | `""`                                           |
 | **`ingress_class_name`** (string)        | The name of ingress class to use instead of the cluster default. see [IngressSpec](https://kubernetes.io/docs/reference/kubernetes-api/service-resources/ingress-v1/#IngressSpec). This parameter is ignored when `ingress_type` is `Route` | `""`                                           |
+| **`gateway_parent_refs`** (array)        | Gateways the TLSRoute attaches to, each a Gateway API [ParentReference](https://gateway-api.sigs.k8s.io/reference/api-spec/#parentreference). Required when `ingress_type` is `TLSRoute`                                                       | `[]`                                           |
+| **`gateway_annotations`** (string)       | Additional annotations on the TLSRoute                                                                                                                                                                                                      | `""`                                           |
 
 #### AscenderMeshIngressStatus
 

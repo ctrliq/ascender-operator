@@ -78,6 +78,15 @@ command -v kubectl >/dev/null || die "kubectl is not on PATH"
 
 KC="kubectl -n $NAMESPACE"
 
+# The installer's Route and HTTPRoute kinds exist only on some clusters, and
+# naming one the cluster does not serve fails the whole get, so each is looked
+# for only where it is served.
+for kind in route.route.openshift.io httproute.gateway.networking.k8s.io; do
+    if $KC get "$kind" >/dev/null 2>&1; then
+        KINDS="$KINDS,$kind"
+    fi
+done
+
 # resource.group, kubectl's fully qualified form. It reads as a stutter only
 # because each group is named after its product: the resource awx in the group
 # awx.ansible.com, the resource ascender in ascender.ansible.com.

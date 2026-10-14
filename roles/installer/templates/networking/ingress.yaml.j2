@@ -86,6 +86,36 @@ spec:
 {% endif %}
 {% endif %}
 
+{% if ingress_type|lower == "httproute" %}
+{# The ingress_hosts hostnames, else hostname, else none, so the route answers for whatever the listener does #}
+{% set _hostnames = (ingress_hosts | default([], true) | selectattr('hostname', 'defined') | map(attribute='hostname') | unique | list) or ([hostname] if hostname else []) %}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: '{{ ansible_operator_meta.name }}'
+  namespace: '{{ ansible_operator_meta.namespace }}'
+  labels:
+    {{ lookup("template", "../common/templates/labels/common.yaml.j2") | indent(width=4) | trim }}
+{% if gateway_annotations %}
+  annotations:
+    {{ gateway_annotations | indent(width=4) }}
+{% endif %}
+spec:
+  parentRefs: {{ gateway_parent_refs | to_json }}
+{% if _hostnames %}
+  hostnames: {{ _hostnames | to_json }}
+{% endif %}
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: '{{ ingress_path }}'
+      backendRefs:
+        - name: '{{ ansible_operator_meta.name }}-service'
+          port: 80
+{% endif %}
+
 {% if ingress_type|lower == "route" %}
 ---
 {% if route_api_version is defined %}

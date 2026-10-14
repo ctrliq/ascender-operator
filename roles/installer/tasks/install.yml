@@ -41,6 +41,12 @@
     when: this_awx['resources'][0]['metadata']['labels']
   when: additional_labels | length
 
+- name: Check the Gateway API is usable
+  include_tasks: '{{ role_path }}/../common/tasks/check_gateway_api.yml'
+  vars:
+    _route_kind: HTTPRoute
+  when: ingress_type | lower == 'httproute'
+
 - name: Include secret key configuration tasks
   include_tasks: secret_key_configuration.yml
 
@@ -115,3 +121,23 @@
 
 - name: Cleanup & Set garbage collection refs
   include_tasks: cleanup.yml
+
+- name: Remove what a previous ingress_type created
+  include_tasks: '{{ role_path }}/../common/tasks/remove_previous_ingress.yml'
+  # Last, so a route the Gateway has not accepted yet holds up nothing else.
+  vars:
+    _owner_api_version: '{{ api_version }}'
+    _owner_kind: '{{ kind }}'
+    _ingress_objects:
+      - ingress_type: ingress
+        api_version: networking.k8s.io/v1
+        kind: Ingress
+        name: '{{ ansible_operator_meta.name }}-ingress'
+      - ingress_type: route
+        api_version: route.openshift.io/v1
+        kind: Route
+        name: '{{ ansible_operator_meta.name }}'
+      - ingress_type: httproute
+        api_version: gateway.networking.k8s.io/v1
+        kind: HTTPRoute
+        name: '{{ ansible_operator_meta.name }}'

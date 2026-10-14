@@ -60,6 +60,26 @@ spec:
     passthrough: true
 {% endif %}
 
+{% if ingress_type|lower == "tlsroute" %}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: TLSRoute
+metadata:
+  name: {{ ansible_operator_meta.name }}
+  namespace: "{{ ansible_operator_meta.namespace }}"
+{% if gateway_annotations %}
+  annotations:
+    {{ gateway_annotations | indent(width=4) }}
+{% endif %}
+spec:
+  parentRefs: {{ gateway_parent_refs | to_json }}
+  hostnames: {{ [external_hostname] | to_json }}
+  rules:
+    - backendRefs:
+        - name: {{ ansible_operator_meta.name }}
+          port: 27199
+{% endif %}
+
 {% if ingress_type|lower == "route" %}
 ---
 apiVersion: route.openshift.io/v1
