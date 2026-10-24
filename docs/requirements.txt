@@ -30,7 +30,7 @@ cssselect2==0.9.0
     # via cairosvg
 defusedxml==0.7.1
     # via cairosvg
-dnspython==2.8.0
+dnspython==2.9.0
     # via linkchecker
 ghp-import==2.1.0
     # via
