@@ -132,7 +132,7 @@ pathspec==1.1.1
     #   mkdocs
     #   mkdocs-macros-plugin
     #   properdocs
-pillow==12.3.0
+pillow==13.0.0
     # via
     #   cairosvg
     #   mkdocs-ansible
