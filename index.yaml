@@ -2,8 +2,18 @@ apiVersion: v1
 entries:
   ascender-operator:
   - apiVersion: v2
+    appVersion: 25.6.3
+    created: "2026-10-27T23:40:49.315899789Z"
+    description: A Helm chart for the Ascender Operator
+    digest: 46eb04cebc3f809527e6913b6b7be8bc078528c97bc52e89ffddf153e74e41bc
+    name: ascender-operator
+    type: application
+    urls:
+    - https://github.com/ctrliq/ascender-operator/releases/download/25.6.3/ascender-operator-25.6.3.tgz
+    version: 25.6.3
+  - apiVersion: v2
     appVersion: 25.6.2
-    created: "2026-09-09T18:52:08.025521005Z"
+    created: "2026-10-27T23:40:49.314964647Z"
     description: A Helm chart for the Ascender Operator
     digest: e9f7706528205c30ddfe1e38d2e34584c6aa71bc9bccffb84cd4eb4e500ced44
     name: ascender-operator
@@ -13,7 +23,7 @@ entries:
     version: 25.6.2
   - apiVersion: v2
     appVersion: 25.6.1
-    created: "2026-09-09T18:52:08.024439418Z"
+    created: "2026-10-27T23:40:49.314100778Z"
     description: A Helm chart for the Ascender Operator
     digest: f0d1ced080d6e9ae0a2caccf1a7ceb3b860a26cc81e1d75541c951b70b79d942
     name: ascender-operator
@@ -21,4 +31,4 @@ entries:
     urls:
     - https://github.com/ctrliq/ascender-operator/releases/download/25.6.1/ascender-operator-25.6.1.tgz
     version: 25.6.1
-generated: "2026-09-09T18:52:08.022746373Z"
+generated: "2026-10-27T23:40:49.312979977Z"
