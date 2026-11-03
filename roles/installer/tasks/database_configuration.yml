@@ -223,7 +223,14 @@
         name: "{{ ansible_operator_meta.name }}-postgres-{{ supported_pg_version }}"
         namespace: "{{ ansible_operator_meta.namespace }}"
         wait: yes
-      when: create_statefulset_result.error == 422
+      # kubernetes.core used to return the HTTP status of a failed apply as
+      # `error`; current releases return only `msg` and `reason`, so a 422
+      # (an immutable field such as volumeClaimTemplates) shows up as
+      # reason "Unprocessable Entity". Check both, and default each, so the
+      # conditional can never fail on a missing key.
+      when: >-
+        (create_statefulset_result.error | default(0) | int == 422)
+        or (create_statefulset_result.reason | default('') == 'Unprocessable Entity')
 
     - name: Recreate PostgreSQL statefulset with updated values
       k8s:
