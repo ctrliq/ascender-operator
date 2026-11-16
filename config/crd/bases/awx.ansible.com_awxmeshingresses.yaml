@@ -56,6 +56,12 @@ spec:
               external_ipaddress:
                 description: External IP address to use for the Mesh Ingress.
                 type: string
+              external_port:
+                description: Port remote nodes dial on external_hostname, the port of the listener the Mesh Ingress is served on. Defaults to 443.
+                type: integer
+                format: int32
+                minimum: 1
+                maximum: 65535
               ingress_type:
                 description: The ingress type to use to reach the deployed instance
                 type: string
@@ -67,6 +73,8 @@ spec:
                 - ingressroutetcp
                 - Route
                 - route
+                - TLSRoute
+                - tlsroute
               ingress_api_version:
                 description: The Ingress API version to use
                 type: string
@@ -81,6 +89,33 @@ spec:
                 type: string
               ingress_controller:
                 description: Special configuration for specific Ingress Controllers
+                type: string
+              gateway_parent_refs:
+                description: Gateways the TLSRoute attaches to when ingress_type is tlsroute. Each entry is a Gateway API ParentReference.
+                type: array
+                items:
+                  type: object
+                  required:
+                  - name
+                  properties:
+                    group:
+                      type: string
+                    kind:
+                      type: string
+                    namespace:
+                      type: string
+                    name:
+                      type: string
+                      minLength: 1
+                    sectionName:
+                      type: string
+                    port:
+                      type: integer
+                      format: int32
+                      minimum: 1
+                      maximum: 65535
+              gateway_annotations:
+                description: Annotations to add to the TLSRoute
                 type: string
               node_selector:
                 description: Assign the Mesh Ingress Pod to the specified node.

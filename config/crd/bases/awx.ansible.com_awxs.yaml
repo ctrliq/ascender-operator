@@ -111,6 +111,8 @@ spec:
                 - ingress
                 - Route
                 - route
+                - HTTPRoute
+                - httproute
               ingress_api_version:
                 description: The Ingress API version to use
                 type: string
@@ -143,6 +145,33 @@ spec:
                       type: string
               ingress_controller:
                 description: Special configuration for specific Ingress Controllers
+                type: string
+              gateway_parent_refs:
+                description: Gateways the HTTPRoute attaches to when ingress_type is httproute. Each entry is a Gateway API ParentReference.
+                type: array
+                items:
+                  type: object
+                  required:
+                  - name
+                  properties:
+                    group:
+                      type: string
+                    kind:
+                      type: string
+                    namespace:
+                      type: string
+                    name:
+                      type: string
+                      minLength: 1
+                    sectionName:
+                      type: string
+                    port:
+                      type: integer
+                      format: int32
+                      minimum: 1
+                      maximum: 65535
+              gateway_annotations:
+                description: Annotations to add to the HTTPRoute
                 type: string
               api_urlpattern_prefix:
                 description: An optional configuration to add a prefix in the API URL path
@@ -2045,6 +2074,9 @@ spec:
             properties:
               URL:
                 description: URL to access the deployed instance
+                type: string
+              ingressType:
+                description: The ingress_type last reconciled, used to remove what a previous ingress_type created when it changes
                 type: string
               adminUser:
                 description: Admin user of the deployed instance

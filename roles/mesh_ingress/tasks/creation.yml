@@ -63,6 +63,19 @@
     ingress_type: route
   when: is_openshift | bool and ingress_type | lower == 'none'
 
+- name: Check the Gateway API is usable
+  include_tasks: '{{ role_path }}/../common/tasks/check_gateway_api.yml'
+  vars:
+    _route_kind: TLSRoute
+  when: ingress_type | lower == 'tlsroute'
+
+- name: Check a TLSRoute has a hostname to match on
+  assert:
+    that: external_hostname | default('') | length > 0
+    fail_msg: ingress_type tlsroute needs external_hostname, the SNI name the Gateway routes on.
+    quiet: true
+  when: ingress_type | lower == 'tlsroute'
+
 - name: Apply Ingress resource
   k8s:
     apply: yes
@@ -147,4 +160,33 @@
       ascender-manage add_receptor_address
         --instance {{ ansible_operator_meta.name }}
         --address {{ external_hostname }}
-        --port 443 --protocol ws
+        --port {{ external_port }} --protocol ws
+
+- name: Remove what a previous ingress_type created
+  include_tasks: '{{ role_path }}/../common/tasks/remove_previous_ingress.yml'
+  # Last, so a route the Gateway has not accepted yet holds up nothing else.
+  vars:
+    _owner_api_version: '{{ api_group }}/v1alpha1'
+    _owner_kind: '{{ deployment_kind }}MeshIngress'
+    _ingress_objects:
+      - ingress_type: ingress
+        api_version: networking.k8s.io/v1
+        kind: Ingress
+        name: '{{ ansible_operator_meta.name }}'
+      # Both Traefik groups, since ingress_api_version may have picked either.
+      - ingress_type: ingressroutetcp
+        api_version: traefik.io/v1alpha1
+        kind: IngressRouteTCP
+        name: '{{ ansible_operator_meta.name }}'
+      - ingress_type: ingressroutetcp
+        api_version: traefik.containo.us/v1alpha1
+        kind: IngressRouteTCP
+        name: '{{ ansible_operator_meta.name }}'
+      - ingress_type: route
+        api_version: route.openshift.io/v1
+        kind: Route
+        name: '{{ ansible_operator_meta.name }}'
+      - ingress_type: tlsroute
+        api_version: gateway.networking.k8s.io/v1
+        kind: TLSRoute
+        name: '{{ ansible_operator_meta.name }}'

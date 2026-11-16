@@ -1,0 +1,109 @@
+---
+# When ingress_type changes, delete the object the previous value created, so
+# one path into the deployment is left rather than two.
+#
+# The caller passes
+#   _ingress_objects     every object the role can create, each as
+#                        { ingress_type, api_version, kind, name }
+#   _owner_api_version   the CR being reconciled
+#   _owner_kind
+#
+# The value last reconciled is kept in status.ingressType. A CR with none
+# recorded deletes nothing, and neither does a change to none, which leaves
+# the way in to the user.
+#
+# Included by path rather than with include_role, so the caller's variables
+# are not shadowed by the common role's defaults.
+- name: Read the ingress_type this CR was last reconciled with
+  kubernetes.core.k8s_info:
+    api_version: '{{ _owner_api_version }}'
+    kind: '{{ _owner_kind }}'
+    name: '{{ ansible_operator_meta.name }}'
+    namespace: '{{ ansible_operator_meta.namespace }}'
+  register: _owner
+
+- name: Remove the object the previous ingress_type created
+  vars:
+    _previous_type: "{{ (_owner.resources | first).status.ingressType | default('none') }}"
+    _current_type: '{{ ingress_type | lower }}'
+    _current: "{{ _ingress_objects | selectattr('ingress_type', 'equalto', _current_type) | first }}"
+    # Conditions written for an older generation of the route are dropped.
+    _route_generation: "{{ _route.resources[0].metadata.generation | default(0) | int }}"
+    _all_conditions: "{{ _route.resources[0].status.parents | default([]) | map(attribute='conditions') | flatten }}"
+    _route_conditions: >-
+      {{ (_all_conditions | rejectattr('observedGeneration', 'defined') | list)
+         + (_all_conditions | selectattr('observedGeneration', 'defined')
+                            | selectattr('observedGeneration', 'ge', _route_generation | int) | list) }}
+    # Every Gateway named has accepted the route and no backend is unresolved.
+    _route_ready: >-
+      {{ _route_conditions | selectattr('type', 'equalto', 'Accepted')
+                           | selectattr('status', 'equalto', 'True') | list | length
+           >= gateway_parent_refs | length
+         and _route_conditions | selectattr('type', 'equalto', 'ResolvedRefs')
+                               | rejectattr('status', 'equalto', 'True') | list | length == 0 }}
+  when: _previous_type not in ['none', _current_type] and _current_type != 'none'
+  block:
+    # The old object keeps serving until the Gateway accepts the new route.
+    # Ingress and Route report nothing comparable, so only a route waits.
+    - name: Wait for the Gateway to accept the new route
+      kubernetes.core.k8s_info:
+        api_version: '{{ _current.api_version }}'
+        kind: '{{ _current.kind }}'
+        name: '{{ _current.name }}'
+        namespace: '{{ ansible_operator_meta.namespace }}'
+      register: _route
+      until: _route_ready | bool
+      retries: 12
+      delay: 10
+      # The assert below reports a route that is never accepted.
+      failed_when: false
+      when: _current.api_version.startswith('gateway.networking.k8s.io/')
+
+    - name: Keep the previous object until the route is accepted
+      ansible.builtin.assert:
+        that: _route is skipped or _route_ready | bool
+        fail_msg: >-
+          {{ _current.kind }} {{ _current.name }} is not accepted by every Gateway in
+          gateway_parent_refs, so the {{ _previous_type }} object is kept and this is
+          retried on the next reconcile. Conditions: {{ _route_conditions | to_json }}
+          {{ _route.msg | default('') }}
+          To back out instead, set ingress_type back to {{ _previous_type }} and delete
+          {{ _current.kind }} {{ _current.name }}.
+        quiet: true
+
+    - name: Look up the object the previous ingress_type created
+      kubernetes.core.k8s_info:
+        api_version: '{{ item.api_version }}'
+        kind: '{{ item.kind }}'
+        name: '{{ item.name }}'
+        namespace: '{{ ansible_operator_meta.namespace }}'
+      loop: "{{ _ingress_objects | selectattr('ingress_type', 'equalto', _previous_type) | list }}"
+      loop_control:
+        label: '{{ item.kind }}/{{ item.name }}'
+      register: _previous
+
+    # Only an object this CR owns is deleted, never one made by hand.
+    - name: Delete the object the previous ingress_type created
+      kubernetes.core.k8s:
+        state: absent
+        api_version: '{{ item.apiVersion }}'
+        kind: '{{ item.kind }}'
+        name: '{{ item.metadata.name }}'
+        namespace: '{{ item.metadata.namespace }}'
+      loop: "{{ _previous.results | map(attribute='resources') | flatten }}"
+      loop_control:
+        label: '{{ item.kind }}/{{ item.metadata.name }}'
+      when: >-
+        item.metadata.ownerReferences | default([])
+        | selectattr('kind', 'equalto', _owner_kind)
+        | selectattr('name', 'equalto', ansible_operator_meta.name)
+        | list | length > 0
+
+- name: Record the ingress_type this CR is reconciled with
+  operator_sdk.util.k8s_status:
+    api_version: '{{ _owner_api_version }}'
+    kind: '{{ _owner_kind }}'
+    name: '{{ ansible_operator_meta.name }}'
+    namespace: '{{ ansible_operator_meta.namespace }}'
+    status:
+      ingressType: '{{ ingress_type | lower }}'
